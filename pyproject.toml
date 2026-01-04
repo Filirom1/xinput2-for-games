@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xinput2-for-games"
+version = "0.1.0"
+description = "XInput2 CLI/GUI tool for multiplayer gaming setup on Linux"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Romain"}
+]
+keywords = ["xinput2", "multiplayer", "gaming", "linux", "input", "keyboard", "mouse"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Environment :: X11 Applications :: GTK",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Games/Entertainment",
+    "Topic :: Desktop Environment",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "python-xlib>=0.33",
+]
+
+[project.optional-dependencies]
+gui = [
+    "PyGObject>=3.42.0",
+]
+
+[project.scripts]
+xinput2-for-games = "xinput2_for_games.main:main"
+
+[project.urls]
+Homepage = "https://github.com/Filirom1/xinput2-for-games"
+Repository = "https://github.com/Filirom1/xinput2-for-games"
+Issues = "https://github.com/Filirom1/xinput2-for-games/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
