@@ -1,6 +1,6 @@
 # xinput2-for-games
 
-A CLI and GUI tool to easily set up multiple input devices for local multiplayer gaming on Linux using XInput2.
+A CLI, GUI, and Kodi addon tool to easily set up multiple input devices for local multiplayer gaming on Linux using XInput2.
 
 ## Features
 
@@ -8,8 +8,9 @@ A CLI and GUI tool to easily set up multiple input devices for local multiplayer
 - **Automatic mouse detection**: Click to assign a mouse to a player (optional)
 - **Master device management**: Creates separate XInput2 master devices for each player
 - **Cleanup support**: Automatically removes unused masters when reducing player count
-- **GUI mode**: GTK-based graphical interface for easy setup
+- **GUI mode**: GTK-based graphical interface with retro arcade styling
 - **CLI mode**: Terminal-based interface for scripting and quick setup
+- **Kodi addon**: Native Kodi integration for media center setups
 
 ## How it works
 
@@ -65,6 +66,28 @@ cd xinput2-for-games
 pip install -e .[gui]
 ```
 
+### Kodi Addon
+
+1. **Download the addon files** from `kodi-addon/script.xinput2-for-games/` in this repository
+
+2. **Install dependencies** into the addon:
+   ```bash
+   # Copy the Python module
+   cp -r src/xinput2_for_games kodi-addon/script.xinput2-for-games/resources/lib/
+   
+   # Install python-xlib into the addon
+   pip install --target=kodi-addon/script.xinput2-for-games/resources/lib python-xlib
+   ```
+
+3. **Copy to Kodi**:
+   ```bash
+   cp -r kodi-addon/script.xinput2-for-games ~/.kodi/addons/
+   ```
+
+4. **Enable the addon** in Kodi: Add-ons → My add-ons → Program add-ons → XInput2 Multiplayer Setup
+
+The addon will appear in Programs and provides a wizard to set up multiplayer input devices.
+
 ## Usage
 
 ### GUI Mode
@@ -101,6 +124,16 @@ xinput2-for-games 1
 ```
 
 Or use the "Reset to 1 Player" button in the GUI.
+
+### Kodi Mode
+
+Launch the addon from Kodi's Programs menu, or run directly:
+
+```bash
+xinput2-for-games --kodi
+```
+
+**Note**: The `--kodi` flag only works when running inside Kodi (it requires Kodi's Python modules).
 
 ## Requirements
 

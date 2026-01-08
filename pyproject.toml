@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xinput2-for-games"
-version = "0.1.0"
-description = "XInput2 CLI/GUI tool for multiplayer gaming setup on Linux"
+version = "0.2.0"
+description = "XInput2 CLI/GUI/Kodi tool for multiplayer gaming setup on Linux"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
     {name = "Romain"}
 ]
-keywords = ["xinput2", "multiplayer", "gaming", "linux", "input", "keyboard", "mouse"]
+keywords = ["xinput2", "multiplayer", "gaming", "linux", "input", "keyboard", "mouse", "kodi"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
@@ -37,6 +37,7 @@ dependencies = [
 gui = [
     "PyGObject>=3.42.0",
 ]
+# Note: kodi mode has no extra dependencies - xbmc modules are provided by Kodi itself
 
 [project.scripts]
 xinput2-for-games = "xinput2_for_games.main:main"

@@ -4,6 +4,11 @@ XInput2 CLI/GUI tool for multiplayer gaming setup.
 
 Creates separate master devices for each player and assigns keyboards
 (and optionally mice) to their respective masters for isolated input handling.
+
+Supports three modes:
+- CLI: Command-line interface (default)
+- GUI: GTK graphical interface (--gui)
+- Kodi: Kodi addon interface (--kodi)
 """
 
 import argparse
@@ -32,12 +37,23 @@ def main():
     parser.add_argument(
         '--gui',
         action='store_true',
-        help='Launch graphical user interface'
+        help='Launch GTK graphical user interface'
+    )
+    parser.add_argument(
+        '--kodi',
+        action='store_true',
+        help='Launch Kodi addon interface (only works inside Kodi)'
     )
     
     args = parser.parse_args()
     
-    # Launch GUI if requested
+    # Launch Kodi GUI if requested
+    if args.kodi:
+        from .kodi_gui import run_kodi_gui
+        run_kodi_gui()
+        return
+    
+    # Launch GTK GUI if requested
     if args.gui:
         from .gui import run_gui
         run_gui()
@@ -45,7 +61,7 @@ def main():
     
     # CLI mode requires num_players
     if args.num_players is None:
-        parser.error("num_players is required in CLI mode (or use --gui)")
+        parser.error("num_players is required in CLI mode (or use --gui / --kodi)")
     
     from .cli import run_cli
     run_cli(args.num_players, args.names, args.mice)

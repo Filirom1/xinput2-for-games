@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xinput2-for-games"
+       name="XInput2 Multiplayer Setup"
+       version="0.2.0"
+       provider-name="Romain">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="addon.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>linux</platform>
+    <summary lang="en_GB">Set up multiple keyboards for local multiplayer gaming</summary>
+    <summary lang="en_US">Set up multiple keyboards for local multiplayer gaming</summary>
+    <description lang="en_GB">Uses XInput2 to create separate master devices for each player, enabling local multiplayer games with multiple keyboards and mice.
+
+Perfect for couch gaming with multiple players, each using their own keyboard!
+
+Features:
+- Detect keyboards by pressing ENTER
+- Optionally detect mice by clicking
+- Create separate X11 master devices per player
+- Reset to single player mode
+
+Requirements:
+- Linux with X11 (not Wayland)
+- xinput command available
+- python-xlib library</description>
+    <description lang="en_US">Uses XInput2 to create separate master devices for each player, enabling local multiplayer games with multiple keyboards and mice.
+
+Perfect for couch gaming with multiple players, each using their own keyboard!
+
+Features:
+- Detect keyboards by pressing ENTER
+- Optionally detect mice by clicking
+- Create separate X11 master devices per player
+- Reset to single player mode
+
+Requirements:
+- Linux with X11 (not Wayland)
+- xinput command available
+- python-xlib library</description>
+    <license>MIT</license>
+    <source>https://github.com/Filirom1/xinput2-for-games</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+      <fanart>resources/fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
