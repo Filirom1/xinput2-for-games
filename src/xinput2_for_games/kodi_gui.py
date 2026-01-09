@@ -30,6 +30,10 @@ def run_kodi_gui():
     addon = xbmcaddon.Addon()
     addon_name = addon.getAddonInfo('name')
     
+    # Localization helper
+    def _(string_id):
+        return addon.getLocalizedString(string_id)
+    
     # Get X display
     try:
         dpy = get_display()
@@ -37,65 +41,59 @@ def run_kodi_gui():
     except Exception as e:
         xbmcgui.Dialog().ok(
             addon_name,
-            f"Failed to connect to X11 display: {e}",
-            "Make sure you're running on X11 (not Wayland)."
+            _(30030).format(e)
         )
         return
     
-    # Main menu loop
-    while True:
-        menu_choice = xbmcgui.Dialog().select(
-            "🕹️ XInput2 Multiplayer Setup",
-            [
-                "🎮 Set up players (keyboards only)",
-                "🎮 Set up players (keyboards + mice)",
-                "🔄 Reset to single player",
-                "❌ Exit"
-            ]
-        )
-        
-        if menu_choice == -1 or menu_choice == 3:
-            # Exit
-            break
-        elif menu_choice == 0:
-            # Keyboards only
-            setup_multiplayer(dpy, addon_name, detect_mice=False)
-        elif menu_choice == 1:
-            # Keyboards + mice
-            setup_multiplayer(dpy, addon_name, detect_mice=True)
-        elif menu_choice == 2:
-            # Reset
-            reset_to_single_player(dpy, addon_name)
+    # Single menu - select players or reset, then exit
+    options = [
+        "🔄 " + _(30001),  # Reset to single player
+        "🎮 " + _(30002),  # 1 player (keyboards)
+        "🎮 " + _(30003),  # 2 players (keyboards)
+        "🎮 " + _(30004),  # 3 players (keyboards)
+        "🎮 " + _(30005),  # 4 players (keyboards)
+        "🎮 " + _(30006),  # 2 players (keyboards + mice)
+        "🎮 " + _(30007),  # 3 players (keyboards + mice)
+        "🎮 " + _(30008),  # 4 players (keyboards + mice)
+    ]
     
-    xbmcgui.Dialog().notification(
-        addon_name,
-        "Goodbye! 🎮",
-        xbmcgui.NOTIFICATION_INFO,
-        2000
-    )
+    choice = xbmcgui.Dialog().select("🕹️ " + _(30000), options)
+    
+    if choice == -1:
+        # Cancelled
+        return
+    elif choice == 0:
+        # Reset to single player - no confirmation
+        cleanup_extra_masters(
+            dpy, [],
+            log_func=lambda msg: xbmc.log(f"[XInput2] {msg}", xbmc.LOGINFO)
+        )
+        xbmcgui.Dialog().notification(
+            addon_name,
+            _(30020) + " ✓",
+            xbmcgui.NOTIFICATION_INFO,
+            2000
+        )
+    elif choice in [1, 2, 3, 4]:
+        # Keyboards only: 1-4 players
+        num_players = choice
+        setup_multiplayer(dpy, addon, num_players, detect_mice=False)
+    elif choice in [5, 6, 7]:
+        # Keyboards + mice: 2-4 players
+        num_players = choice - 3  # 5->2, 6->3, 7->4
+        setup_multiplayer(dpy, addon, num_players, detect_mice=True)
 
 
-def setup_multiplayer(dpy, addon_name, detect_mice=False):
+def setup_multiplayer(dpy, addon, num_players, detect_mice=False):
     """Run the multiplayer setup wizard."""
     import xbmc
     import xbmcgui
     
-    # Ask for number of players
-    num_players = xbmcgui.Dialog().numeric(
-        0,  # Numeric keyboard
-        "Number of players (1-10):"
-    )
+    addon_name = addon.getAddonInfo('name')
     
-    if not num_players:
-        return
-    
-    try:
-        num_players = int(num_players)
-        if num_players < 1 or num_players > 10:
-            raise ValueError()
-    except ValueError:
-        xbmcgui.Dialog().ok(addon_name, "Please enter a number between 1 and 10")
-        return
+    # Localization helper
+    def _(string_id):
+        return addon.getLocalizedString(string_id)
     
     player_names = [f"Player{i+1}" for i in range(num_players)]
     player_keyboards = {}
@@ -104,8 +102,8 @@ def setup_multiplayer(dpy, addon_name, detect_mice=False):
     # Create progress dialog for keyboard detection
     progress = xbmcgui.DialogProgress()
     progress.create(
-        "🎮 Multiplayer Setup",
-        f"Setting up {num_players} player(s)..."
+        "🎮 " + _(30000),
+        _(30010).format(num_players)
     )
     
     monitor = xbmc.Monitor()
@@ -119,8 +117,7 @@ def setup_multiplayer(dpy, addon_name, detect_mice=False):
         percent = int((i / num_players) * 50)
         progress.update(
             percent,
-            f"⌨️ {player_name}: Press ENTER on your keyboard!",
-            f"({i+1}/{num_players} keyboards)"
+            "⌨️ " + _(30011).format(player_name, i+1, num_players)
         )
         
         # Get slave keyboard IDs
@@ -149,7 +146,7 @@ def setup_multiplayer(dpy, addon_name, detect_mice=False):
                 keyboard_name = get_device_name_by_id(dpy, keyboard_id)
                 xbmcgui.Dialog().notification(
                     addon_name,
-                    f"'{keyboard_name}' already assigned!",
+                    _(30022).format(keyboard_name),
                     xbmcgui.NOTIFICATION_WARNING,
                     2000
                 )
@@ -160,7 +157,7 @@ def setup_multiplayer(dpy, addon_name, detect_mice=False):
             
             xbmcgui.Dialog().notification(
                 addon_name,
-                f"✓ {player_name}: {keyboard_name}",
+                "✓ " + _(30023).format(player_name, keyboard_name),
                 xbmcgui.NOTIFICATION_INFO,
                 1500
             )
@@ -176,8 +173,7 @@ def setup_multiplayer(dpy, addon_name, detect_mice=False):
             percent = 50 + int((i / num_players) * 40)
             progress.update(
                 percent,
-                f"🖱️ {player_name}: CLICK with your mouse!",
-                f"({i+1}/{num_players} mice)"
+                "🖱️ " + _(30012).format(player_name, i+1, num_players)
             )
             
             # Get slave pointer IDs
@@ -205,7 +201,7 @@ def setup_multiplayer(dpy, addon_name, detect_mice=False):
                     mouse_name = get_device_name_by_id(dpy, mouse_id)
                     xbmcgui.Dialog().notification(
                         addon_name,
-                        f"'{mouse_name}' already assigned!",
+                        _(30022).format(mouse_name),
                         xbmcgui.NOTIFICATION_WARNING,
                         2000
                     )
@@ -216,14 +212,14 @@ def setup_multiplayer(dpy, addon_name, detect_mice=False):
                 
                 xbmcgui.Dialog().notification(
                     addon_name,
-                    f"✓ {player_name}: {mouse_name}",
+                    "✓ " + _(30023).format(player_name, mouse_name),
                     xbmcgui.NOTIFICATION_INFO,
                     1500
                 )
                 detected = True
     
     # Apply configuration
-    progress.update(95, "⚡ Configuring devices...", "")
+    progress.update(95, "⚡ " + _(30013))
     
     setup_players(
         dpy,
@@ -235,39 +231,12 @@ def setup_multiplayer(dpy, addon_name, detect_mice=False):
     
     progress.close()
     
-    # Show success message
-    mice_text = " and mice" if detect_mice else ""
-    xbmcgui.Dialog().ok(
-        "🎉 Setup Complete!",
-        f"Successfully configured {num_players} player(s).",
-        f"Keyboards{mice_text} are now assigned.",
-        "Enjoy your multiplayer game! 🎮"
-    )
-
-
-def reset_to_single_player(dpy, addon_name):
-    """Reset to single player configuration."""
-    import xbmc
-    import xbmcgui
-    
-    confirm = xbmcgui.Dialog().yesno(
+    # Show success notification (non-blocking)
+    xbmcgui.Dialog().notification(
         addon_name,
-        "Reset all players to single player mode?",
-        "This will remove all extra master devices."
-    )
-    
-    if not confirm:
-        return
-    
-    cleanup_extra_masters(
-        dpy, [],
-        log_func=lambda msg: xbmc.log(f"[XInput2] {msg}", xbmc.LOGINFO)
-    )
-    
-    xbmcgui.Dialog().ok(
-        addon_name,
-        "Reset complete!",
-        "All devices returned to single player mode."
+        _(30021).format(num_players) + " 🎮",
+        xbmcgui.NOTIFICATION_INFO,
+        3000
     )
 
 

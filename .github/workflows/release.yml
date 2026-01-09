@@ -1,0 +1,92 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-kodi-addon:
+    name: Build Kodi Addon
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install python-xlib
+
+      - name: Build Kodi addon
+        run: |
+          mkdir -p dist/script.xinput2-for-games/resources/lib
+          
+          # Copy addon files
+          cp kodi-addon/script.xinput2-for-games/addon.xml dist/script.xinput2-for-games/
+          cp kodi-addon/script.xinput2-for-games/addon.py dist/script.xinput2-for-games/
+          
+          # Copy language files
+          cp -r kodi-addon/script.xinput2-for-games/resources/language dist/script.xinput2-for-games/resources/
+          
+          # Copy icon
+          cp kodi-addon/script.xinput2-for-games/resources/icon.svg dist/script.xinput2-for-games/resources/
+          
+          # Convert SVG to PNG for Kodi
+          sudo apt-get install -y imagemagick
+          convert -background none dist/script.xinput2-for-games/resources/icon.svg -resize 256x256 dist/script.xinput2-for-games/resources/icon.png
+          
+          # Copy Python module
+          cp -r src/xinput2_for_games dist/script.xinput2-for-games/resources/lib/
+          
+          # Copy python-xlib
+          pip install --target=dist/script.xinput2-for-games/resources/lib python-xlib
+          
+          # Remove unnecessary files
+          rm -rf dist/script.xinput2-for-games/resources/lib/*.dist-info
+          rm -rf dist/script.xinput2-for-games/resources/lib/__pycache__
+          find dist -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true
+          find dist -name '*.pyc' -delete 2>/dev/null || true
+          
+          # Create zip
+          cd dist
+          zip -r ../xinput2-for-games-kodi-addon.zip script.xinput2-for-games
+
+      - name: Upload Kodi addon artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kodi-addon
+          path: xinput2-for-games-kodi-addon.zip
+
+  release:
+    name: Create Release
+    needs: [build-kodi-addon]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -la artifacts/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/kodi-addon/xinput2-for-games-kodi-addon.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,6 @@
 # XInput2 for Games - Kodi Addon
 
-This folder contains a ready-to-use Kodi addon template.
+This folder contains a ready-to-use Kodi addon template with multi-language support (English, French).
 
 ## Installation
 
@@ -39,6 +39,12 @@ This folder contains a ready-to-use Kodi addon template.
    ├── addon.xml
    ├── addon.py
    └── resources/
+       ├── icon.png (convert icon.svg to PNG)
+       ├── language/
+       │   ├── resource.language.en_gb/
+       │   │   └── strings.po
+       │   └── resource.language.fr_fr/
+       │       └── strings.po
        └── lib/
            ├── xinput2_for_games/
            │   ├── __init__.py
@@ -51,9 +57,9 @@ This folder contains a ready-to-use Kodi addon template.
    - `addon.xml` and `addon.py` are ready
    - Copy `src/xinput2_for_games/` to `resources/lib/`
    - Download python-xlib and copy `Xlib/` folder to `resources/lib/`
+   - Convert `resources/icon.svg` to PNG (256x256): `convert icon.svg icon.png`
 
-3. Add icon and fanart (optional):
-   - `resources/icon.png` (256x256 or 512x512)
+3. Add fanart (optional):
    - `resources/fanart.jpg` (1280x720 or 1920x1080)
 
 ## Usage
