@@ -276,8 +276,8 @@ def wait_for_enter_key_with_cancel(dpy, slave_keyboard_ids, is_canceled):
                 # Parse raw event data
                 deviceid, time, keycode = struct.unpack('<HII', event.data[:10])
                 
-                # Enter key = 36
-                if keycode == 36 and deviceid in slave_keyboard_ids:
+                # Enter key = 65
+                if keycode == 65 and deviceid in slave_keyboard_ids:
                     # Deselect events before returning
                     xinput.select_events(root, [(xinput.AllDevices, 0)])
                     # Flush any remaining events

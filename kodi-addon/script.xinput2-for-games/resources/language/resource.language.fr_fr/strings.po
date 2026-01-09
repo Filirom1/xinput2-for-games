@@ -52,8 +52,8 @@ msgid "Setting up {0} player(s)..."
 msgstr "Configuration de {0} joueur(s)..."
 
 msgctxt "#30011"
-msgid "{0}: Press ENTER on your keyboard! ({1}/{2})"
-msgstr "{0}: Appuyez sur ENTRÉE ! ({1}/{2})"
+msgid "{0}: Press SPACE on your keyboard! ({1}/{2})"
+msgstr "{0}: Appuyez sur ESPACE ! ({1}/{2})"
 
 msgctxt "#30012"
 msgid "{0}: CLICK with your mouse! ({1}/{2})"

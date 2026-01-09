@@ -52,7 +52,7 @@ msgid "Setting up {0} player(s)..."
 msgstr ""
 
 msgctxt "#30011"
-msgid "{0}: Press ENTER on your keyboard! ({1}/{2})"
+msgid "{0}: Press SPACE on your keyboard! ({1}/{2})"
 msgstr ""
 
 msgctxt "#30012"
