@@ -1,0 +1,86 @@
+# Kodi Media Center language file
+# Addon Name: XInput2 Multiplayer Setup
+# Addon id: script.xinput2-for-games
+# Addon Provider: Romain
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+# Menu title
+msgctxt "#30000"
+msgid "XInput2 Multiplayer Setup"
+msgstr ""
+
+# Menu options
+msgctxt "#30001"
+msgid "Reset to single player"
+msgstr ""
+
+msgctxt "#30002"
+msgid "1 player (keyboards)"
+msgstr ""
+
+msgctxt "#30003"
+msgid "2 players (keyboards)"
+msgstr ""
+
+msgctxt "#30004"
+msgid "3 players (keyboards)"
+msgstr ""
+
+msgctxt "#30005"
+msgid "4 players (keyboards)"
+msgstr ""
+
+msgctxt "#30006"
+msgid "2 players (keyboards + mice)"
+msgstr ""
+
+msgctxt "#30007"
+msgid "3 players (keyboards + mice)"
+msgstr ""
+
+msgctxt "#30008"
+msgid "4 players (keyboards + mice)"
+msgstr ""
+
+# Progress messages
+msgctxt "#30010"
+msgid "Setting up {0} player(s)..."
+msgstr ""
+
+msgctxt "#30011"
+msgid "{0}: Press ENTER on your keyboard! ({1}/{2})"
+msgstr ""
+
+msgctxt "#30012"
+msgid "{0}: CLICK with your mouse! ({1}/{2})"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Configuring devices..."
+msgstr ""
+
+# Notifications
+msgctxt "#30020"
+msgid "Reset to single player"
+msgstr ""
+
+msgctxt "#30021"
+msgid "{0} player(s) ready!"
+msgstr ""
+
+msgctxt "#30022"
+msgid "'{0}' already assigned!"
+msgstr ""
+
+msgctxt "#30023"
+msgid "{0}: {1}"
+msgstr ""
+
+# Errors
+msgctxt "#30030"
+msgid "Failed to connect to X11 display: {0}. Make sure you're running on X11 (not Wayland)."
+msgstr ""

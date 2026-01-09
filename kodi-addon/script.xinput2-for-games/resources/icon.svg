@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background - dark arcade style -->
+  <rect width="256" height="256" fill="#1a1a2e"/>
+  
+  <!-- Glow effect -->
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Keyboard (top) -->
+  <g filter="url(#glow)">
+    <!-- Keyboard body -->
+    <rect x="28" y="40" width="200" height="80" rx="8" fill="#2d2d44" stroke="#00ffff" stroke-width="3"/>
+    
+    <!-- Keyboard keys row 1 -->
+    <rect x="40" y="52" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="64" y="52" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="88" y="52" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="112" y="52" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="136" y="52" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="160" y="52" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="184" y="52" width="32" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    
+    <!-- Keyboard keys row 2 -->
+    <rect x="40" y="72" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="64" y="72" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="88" y="72" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="112" y="72" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="136" y="72" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="160" y="72" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <!-- Enter key highlighted -->
+    <rect x="184" y="72" width="32" height="36" rx="2" fill="#39ff14" stroke="#39ff14" stroke-width="2"/>
+    <text x="200" y="95" font-family="monospace" font-size="10" fill="#1a1a2e" text-anchor="middle" font-weight="bold">↵</text>
+    
+    <!-- Keyboard keys row 3 (spacebar) -->
+    <rect x="40" y="92" width="28" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="72" y="92" width="84" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+    <rect x="160" y="92" width="20" height="16" rx="2" fill="#3d3d5c" stroke="#00ffff" stroke-width="1"/>
+  </g>
+  
+  <!-- Gamepad (bottom) -->
+  <g filter="url(#glow)">
+    <!-- Gamepad body -->
+    <path d="M48 160 Q28 160 28 180 L28 200 Q28 216 48 216 L88 216 Q98 216 108 200 L148 200 Q158 216 168 216 L208 216 Q228 216 228 200 L228 180 Q228 160 208 160 Z" fill="#2d2d44" stroke="#ff00ff" stroke-width="3"/>
+    
+    <!-- D-pad -->
+    <rect x="52" y="175" width="12" height="30" rx="2" fill="#3d3d5c" stroke="#ff00ff" stroke-width="1"/>
+    <rect x="43" y="184" width="30" height="12" rx="2" fill="#3d3d5c" stroke="#ff00ff" stroke-width="1"/>
+    
+    <!-- Action buttons -->
+    <circle cx="188" cy="178" r="8" fill="#ff0044" stroke="#ff0044" stroke-width="1"/>
+    <circle cx="208" cy="190" r="8" fill="#39ff14" stroke="#39ff14" stroke-width="1"/>
+    <circle cx="168" cy="190" r="8" fill="#ffff00" stroke="#ffff00" stroke-width="1"/>
+    <circle cx="188" cy="202" r="8" fill="#00ffff" stroke="#00ffff" stroke-width="1"/>
+    
+    <!-- Analog sticks -->
+    <circle cx="98" cy="190" r="14" fill="#3d3d5c" stroke="#ff00ff" stroke-width="2"/>
+    <circle cx="98" cy="190" r="8" fill="#4d4d6c"/>
+    <circle cx="148" cy="190" r="14" fill="#3d3d5c" stroke="#ff00ff" stroke-width="2"/>
+    <circle cx="148" cy="190" r="8" fill="#4d4d6c"/>
+  </g>
+  
+  <!-- "x2" multiplayer indicator -->
+  <g filter="url(#glow)">
+    <circle cx="220" cy="48" r="24" fill="#ff00ff" stroke="#ffffff" stroke-width="2"/>
+    <text x="220" y="56" font-family="monospace" font-size="22" fill="#ffffff" text-anchor="middle" font-weight="bold">x2</text>
+  </g>
+  
+  <!-- Connection lines (showing multiplayer) -->
+  <line x1="128" y1="124" x2="128" y2="156" stroke="#39ff14" stroke-width="3" stroke-dasharray="6,3"/>
+</svg>

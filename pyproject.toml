@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xinput2-for-games"
-version = "0.2.0"
+version = "0.3.0"
 description = "XInput2 CLI/GUI/Kodi tool for multiplayer gaming setup on Linux"
 readme = "README.md"
 license = {text = "MIT"}
